@@ -10,7 +10,7 @@
 # production
 /build
 
-# misc
+# miscgit config --global user.email
 .DS_Store
 .env.local
 .env.development.local
