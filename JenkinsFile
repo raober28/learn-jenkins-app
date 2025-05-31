@@ -11,12 +11,7 @@ pipeline {
       steps {
         // Make sure zscaler.crt is in your Git repo root
         sh '''
-          echo "Using Zscaler cert"
-          export NODE_EXTRA_CA_CERTS=zscaler.crt
-          npm config set cafile=zscaler.crt
-
-          echo "Cleaning previous state"
-          rm -rf node_modules package-lock.json
+           
 
           echo "Installing dependencies"
           npm install
