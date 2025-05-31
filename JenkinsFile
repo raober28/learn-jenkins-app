@@ -1,18 +1,17 @@
 pipeline {
-    agent {
-        docker {
-        image 'node:16'
-        reuseNode true
-        }
-    }
+  
 
     stages {
       stage('Install & Build') {
+        agent {
+          docker {
+            image 'node:16'
+            reuseNode true
+          }
+        }
         steps {
           // Make sure zscaler.crt is in your Git repo root
           sh '''
-            
-
             echo "Installing dependencies"
             npm install
 
@@ -22,11 +21,15 @@ pipeline {
         }
       }
       stage('Test') {
+        agent {
+          docker {
+            image 'node:16'
+            reuseNode true
+          }
+        }
         steps {
           // Make sure zscaler.crt is in your Git repo root
           sh '''
-            
-
             echo "Test Stage"
             test -f public/index.html
             npm test
