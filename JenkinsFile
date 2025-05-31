@@ -18,6 +18,9 @@ pipeline {
                     node --version
                     npm --version
 
+                    echo "Cleaning previous state"
+                    rm -rf node_modules package-lock.json
+                    
                     # Trust Zscaler cert during this session
                     npm config set cafile=$NODE_EXTRA_CA_CERTS
 
