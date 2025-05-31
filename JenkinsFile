@@ -7,19 +7,30 @@ pipeline {
     }
 
     stages {
-    stage('Install & Build') {
-      steps {
-        // Make sure zscaler.crt is in your Git repo root
-        sh '''
-           
+      stage('Install & Build') {
+        steps {
+          // Make sure zscaler.crt is in your Git repo root
+          sh '''
+            
 
-          echo "Installing dependencies"
-          npm install
+            echo "Installing dependencies"
+            npm install
 
-          echo "Building the app"
-          npm run build
-        '''
+            echo "Building the app"
+            npm run build
+          '''
+        }
       }
-    }
+      stage('Test') {
+        steps {
+          // Make sure zscaler.crt is in your Git repo root
+          sh '''
+            
+
+            echo "Test Stage"
+            test -f public/index.html
+          '''
+        }
+      }
   }
 }
