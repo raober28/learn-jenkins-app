@@ -1,35 +1,30 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'node:18'
-                    reuseNode true
-                }
-            }
-            environment {
-                NODE_EXTRA_CA_CERTS = 'zscaler.crt'
-            }
-            steps {
-                sh '''
-                    ls -la
-                    node --version
-                    npm --version
-
-                    echo "Cleaning previous state"
-                    rm -rf node_modules package-lock.json
-                    
-                    # Trust Zscaler cert during this session
-                    npm config set cafile=$NODE_EXTRA_CA_CERTS
-
-
-                    npm install
-                    npm run build
-                    ls -la
-                '''
-            }
+    agent {
+        docker {
+        image 'node:18'
+        reuseNode true
         }
     }
+
+    stages {
+    stage('Install & Build') {
+      steps {
+        // Make sure zscaler.crt is in your Git repo root
+        sh '''
+          echo "Using Zscaler cert"
+          export NODE_EXTRA_CA_CERTS=zscaler.crt
+          npm config set cafile=zscaler.crt
+
+          echo "Cleaning previous state"
+          rm -rf node_modules package-lock.json
+
+          echo "Installing dependencies"
+          npm install
+
+          echo "Building the app"
+          npm run build
+        '''
+      }
+    }
+  }
 }
