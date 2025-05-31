@@ -2,6 +2,17 @@ pipeline {
     agent any
 
     stages {
+         stage('Trust Zs Cert') {
+            steps {
+                sh '''
+                    # Copy the cert inside the system trust store
+                    cp zscaler.crt /usr/local/share/ca-certificates/zscaler.crt
+
+                    # Update certs to trust Zscaler
+                    update-ca-certificates
+                '''
+            }
+        }
         stage('Build') {
             agent {
                 docker {
