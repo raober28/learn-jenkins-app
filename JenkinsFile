@@ -11,8 +11,8 @@ pipeline {
             }
             steps {
                  sh '''
-                    // echo "Cleaning previous install state..."
-                    // rm -rf node_modules package-lock.json .npm .npmrc .npm-cache
+                    echo "Cleaning previous install state..."
+                    rm -rf node_modules package-lock.json .npm .npmrc .npm-cache
 
                     echo "Listing files"
                     ls -la
@@ -53,6 +53,12 @@ pipeline {
                     npm test
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            junit 'test-results/junit.xml'
         }
     }
 }
