@@ -31,7 +31,7 @@ pipeline {
                     echo "strict-ssl=false" >> .npmrc
 
                     echo "Installing dependencies..."
-                    npm install --unsafe-perm
+                    npm ci || npm install
 
                     echo "Building the app..."
                     npx react-scripts build
