@@ -67,7 +67,9 @@ pipeline {
             steps {
                 sh '''
                     npm install serve
-                    serve -s build
+                    ./node_modules/.bin/serve -s build &
+                    echo "Waiting for the server to start..."
+                    sleep 5
                     npx playwright test
                 '''
             }
