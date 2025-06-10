@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        NPM_CACHE_DIR = "${WORKSPACE}/.npm-cache"
+        NODE_MODULES_DIR = "${WORKSPACE}/node_modules"
+    }
 
     stages {
         stage('Build') {
@@ -11,8 +15,8 @@ pipeline {
             }
             steps {
                  sh '''
-                    echo "Cleaning previous install state..."
-                    rm -rf node_modules package-lock.json .npm .npmrc .npm-cache
+                    // echo "Cleaning previous install state..."
+                    // rm -rf node_modules package-lock.json .npm .npmrc .npm-cache
 
                     echo "Listing files"
                     ls -la
@@ -23,9 +27,13 @@ pipeline {
                     echo "NPM version:"
                     npm --version
                     
-                    echo "Setting up local NPM config..."
-                    mkdir -p .npm-cache
-                    echo "cache=./.npm-cache" >> .npmrc
+                    // echo "Setting up local NPM config..."
+                    // mkdir -p .npm-cache
+                    // echo "cache=./.npm-cache" >> .npmrc
+                    // echo "strict-ssl=false" >> .npmrc
+
+                    echo "Using cached NPM directory: $NPM_CACHE_DIR"
+                    echo "cache=$NPM_CACHE_DIR" > .npmrc
                     echo "strict-ssl=false" >> .npmrc
 
                     echo "Installing dependencies..."
