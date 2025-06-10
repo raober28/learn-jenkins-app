@@ -112,10 +112,8 @@ pipeline {
                     export NODE_TLS_REJECT_UNAUTHORIZED=0
 
                     npm install netlify-cli
-                    if ! id "$(whoami)" >/dev/null 2>&1; then
-                        echo "$(whoami):x:$(id -u):$(id -g):Jenkins User:/home/jenkins:/bin/false" >> /etc/passwd
-                    fi
-                    npx netlify --version
+                    
+                    ./node_modules/.bin/netlify --version
                 '''
             }
         }
