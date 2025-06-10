@@ -22,6 +22,7 @@ pipeline {
                     npm --version
                     
                     echo "Installing dependencies..."
+                    npm config set strict-ssl false
                     npm install --unsafe-perm
 
                     echo "Building the app..."
