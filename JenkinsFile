@@ -21,8 +21,8 @@ pipeline {
                     echo "NPM version:"
                     npm --version
                     
-                    echo "Installing dependencies..."
-                    npm config set strict-ssl false
+                    echo "Setting up local NPM config..."
+                    echo "strict-ssl=false" > .npmrc
                     npm install --unsafe-perm
 
                     echo "Building the app..."
