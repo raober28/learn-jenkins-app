@@ -106,6 +106,8 @@ pipeline {
             }
             steps {
                  sh '''
+                    echo "strict-ssl=false" > .npmrc
+                    echo "cache=$NPM_CACHE_DIR" >> .npmrc
                     npm install netlify-cli
                     netflify --version
                 '''
