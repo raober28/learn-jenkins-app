@@ -10,19 +10,25 @@ pipeline {
                 }
             }
             steps {
-                sh '''
+                 sh '''
                     echo "Cleaning previous install state..."
-                    rm -rf node_modules package-lock.json
+                    rm -rf node_modules package-lock.json .npm .npmrc .npm-cache
 
                     echo "Listing files"
                     ls -la
+
                     echo "Node version:"
                     node --version
+
                     echo "NPM version:"
                     npm --version
                     
                     echo "Setting up local NPM config..."
-                    echo "strict-ssl=false" > .npmrc
+                    mkdir -p .npm-cache
+                    echo "cache=./.npm-cache" >> .npmrc
+                    echo "strict-ssl=false" >> .npmrc
+
+                    echo "Installing dependencies..."
                     npm install --unsafe-perm
 
                     echo "Building the app..."
