@@ -113,6 +113,8 @@ pipeline {
                     echo "strict-ssl=false" > .npmrc
                     echo "cache=$NPM_CACHE_DIR" >> .npmrc
 
+                    npm config set strict-ssl false
+                    npm config set ca ""
                     export NODE_TLS_REJECT_UNAUTHORIZED=0
 
                     npm install --unsafe-perm netlify-cli
