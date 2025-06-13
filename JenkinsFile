@@ -19,7 +19,7 @@ pipeline {
             steps {
                  sh '''
                     
-
+                    echo "Small Change"
                     echo "Listing files"
                     ls -la
 
