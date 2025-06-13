@@ -1,6 +1,12 @@
 // @ts-check
 const { defineConfig, devices } = require('@playwright/test');
+const config = {
+  use: {
+    ignoreHTTPSErrors: true,
+  },
+};
 
+export default config;
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
