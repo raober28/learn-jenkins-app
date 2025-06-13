@@ -1,12 +1,6 @@
 // @ts-check
 const { defineConfig, devices } = require('@playwright/test');
-const config = {
-  use: {
-    ignoreHTTPSErrors: true,
-  },
-};
 
-export default config;
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -35,6 +29,7 @@ module.exports = defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.CI_ENVIRONMENT_URL || 'http://localhost:3000',
+    ignoreHTTPSErrors: true,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
