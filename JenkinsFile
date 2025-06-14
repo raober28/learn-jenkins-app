@@ -117,11 +117,13 @@ pipeline {
 
                     echo "Installing Netlify CLI globally"
                     npm install -g --unsafe-perm netlify-cli 
+                    npm install  node-jq
 
                     echo "Running Netlify deploy..."
                     netlify --version
                     netlify status
-                    netlify deploy --dir=build --json
+                    netlify deploy --dir=build --json > deploy-output.json
+                    node_modules/.bin/node-jq -r '.deploy_url' deploy-output.json
                 '''
             }
         }
