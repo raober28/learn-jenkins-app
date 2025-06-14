@@ -116,12 +116,12 @@ pipeline {
                     export NODE_TLS_REJECT_UNAUTHORIZED=0
 
                     echo "Installing Netlify CLI globally"
-                    npm install -g --unsafe-perm netlify-cli
+                    npm install -g --unsafe-perm netlify-cli 
 
                     echo "Running Netlify deploy..."
                     netlify --version
                     netlify status
-                    netlify deploy --dir=build 
+                    netlify deploy --dir=build --json
                 '''
             }
         }
