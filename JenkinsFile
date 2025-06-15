@@ -169,32 +169,8 @@ pipeline {
             }
         }
 
+
         stage('Deploy Prod') {
-            agent {
-                docker {
-                    image 'node:18'
-                    reuseNode true
-                    args '-u 0'
-                }
-            }
-            steps {
-                 sh '''
-                    npm config set strict-ssl false
-                    npm config set ca ""
-                    export NODE_TLS_REJECT_UNAUTHORIZED=0
-
-                    echo "Installing Netlify CLI globally"
-                    npm install -g --unsafe-perm netlify-cli
-
-                    echo "Running Netlify deploy..."
-                    netlify --version
-                    netlify status
-                    netlify deploy --dir=build --prod
-                '''
-            }
-        }
-
-        stage('Prod E2E') {
                     agent {
                         docker {
                             image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
@@ -206,6 +182,17 @@ pipeline {
                     }
                     steps {
                         sh '''
+                            npm config set strict-ssl false
+                            npm config set ca ""
+                            export NODE_TLS_REJECT_UNAUTHORIZED=0
+
+                            echo "Installing Netlify CLI globally"
+                            npm install -g --unsafe-perm netlify-cli
+
+                            echo "Running Netlify deploy..."
+                            netlify --version
+                            netlify status
+                            netlify deploy --dir=build --prod
                             npx playwright test  --reporter=html
                         '''
                     }
