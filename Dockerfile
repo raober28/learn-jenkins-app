@@ -3,4 +3,5 @@ FROM mcr.microsoft.com/playwright:v1.39.0-jammy
 ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 RUN npm config set strict-ssl false \
  && npm config set ca "" \
- && npm install -g --unsafe-perm netlify-cli node-jq
+ && npm install -g --unsafe-perm netlify-cli node-jq \
+ && npm install -g serve
