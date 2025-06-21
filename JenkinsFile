@@ -22,6 +22,7 @@ pipeline {
                         aws --version
                         echo "Hello S3!" > index.html
                         aws ecs register-task-definition --cli-input-json file://aws/task-definition-prod.json --no-verify-ssl
+                        aws ecs update-service --cluster LearnJenkinsApplication-Cluster-Prod --service LearnJenkinsApplication-Service-Prod --task-definition LearnJenkinsApplication-TaskDefinition-Prod:2 --no-verify-ssl
                 '''
                 }
                 
