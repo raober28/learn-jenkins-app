@@ -3,6 +3,9 @@ pipeline {
     environment {
         REACT_APP_VERSION = "1.0.$BUILD_ID"
         AWS_DEFAULT_REGION = "eu-north-1"
+        AWS_ECS_CLUSTER = 'LearnJenkinsApplication-Cluster-Prod' 
+        AWS_ECS_SERVICE_PROD = 'LearnJenkinsApplication-Service-Prod' 
+        AWS_ECS_TD_PROD = 'LearnJenkinsApplication-TaskDefinition-Prod'
     }
 
     stages {
@@ -23,8 +26,8 @@ pipeline {
                         yum --disableplugin=ovl --setopt=sslverify=false install jq -y 
                         LATEST_TD_REVISION=$(aws ecs register-task-definition --cli-input-json file://aws/task-definition-prod.json --no-verify-ssl | jq '.taskDefinition.revision')
                         echo $LATEST_TD_REVISION
-                        aws ecs update-service --cluster LearnJenkinsApplication-Cluster-Prod --service LearnJenkinsApplication-Service-Prod --task-definition LearnJenkinsApplication-TaskDefinition-Prod:$LATEST_TD_REVISION --no-verify-ssl
-                        aws ecs wait services-stable --cluster LearnJenkinsApplication-Cluster-Prod --services LearnJenkinsApplication-Service-Prod --no-verify-ssl
+                        aws ecs update-service --cluster $AWS_ECS_CLUSTER --service AWS_ECS_SERVICE_PROD --task-definition $AWS_ECS_TD_PROD:$LATEST_TD_REVISION --no-verify-ssl
+                        aws ecs wait services-stable --cluster $AWS_ECS_CLUSTER --services AWS_ECS_SERVICE_PROD --no-verify-ssl
                 '''
                 }
                 
